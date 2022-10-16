@@ -1,5 +1,4 @@
-const yargs = require("yargs");
-const { hideBin } = require("yargs/helpers");
+const { argv } = require("yargs");
 const contacts = require('./contacts');
 
 const invokeAction = async({ action, id, name, email, phone }) => {
@@ -25,7 +24,11 @@ const invokeAction = async({ action, id, name, email, phone }) => {
             console.warn("\x1B[31m Unknown action type!");
     }
 };
-const arr = hideBin(process.argv);
-const { argv } = yargs(arr);
-
-invokeAction(argv);
+const start = async(argv) => {
+    try {
+        await invokeAction(argv);
+    } catch (error) {
+        console.log(error);
+    }
+};
+start(argv);
